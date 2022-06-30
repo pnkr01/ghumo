@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "471187115505",
+    "project_id": "ghumo-b1172",
+    "storage_bucket": "ghumo-b1172.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471187115505:android:65d32f66f604638b7d4850",
+        "android_client_info": {
+          "package_name": "com.pawan.ghumo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471187115505-5jlo9a3rprbjk4icolj2sqsv5ecdu4iu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pawan.ghumo",
+            "certificate_hash": "85835c264e01aab709857b9e3e91be48b0ea55fb"
+          }
+        },
+        {
+          "client_id": "471187115505-31vk8rhvl277o7gevj6nmq2mrnq7gf5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEloTCoIfntOIR3LOv0NbsYUZpxOLDVbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471187115505-31vk8rhvl277o7gevj6nmq2mrnq7gf5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
