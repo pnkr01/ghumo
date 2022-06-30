@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ghumo/home/drawer/drawer.dart';
 import 'package:ghumo/home/places/caousel_places.dart';
+import 'package:ghumo/home/places/near_place.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -124,14 +125,13 @@ class _HomePageState extends State<HomePage>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    // first tab bar view widget
                     Column(
-                      children: <Widget>[
-                        const PlacesTab(),
-                        const SizedBox(
+                      children: const <Widget>[
+                        PlacesTab(),
+                        SizedBox(
                           height: 20.0,
                         ),
-                        const Align(
+                        Align(
                           alignment: Alignment.topLeft,
                           child: Text(
                             'More places to visit',
@@ -141,17 +141,11 @@ class _HomePageState extends State<HomePage>
                             ),
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 20.0,
                         ),
                         Expanded(
-                          child: GridView.count(
-                            crossAxisCount: 2,
-                            children: List.generate(10, (index) {
-                              return placeVertical("Test ",
-                                  "https://images.unsplash.com/photo-1554121347-0f1f876bad19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80");
-                            }),
-                          ),
+                          child: NearPlace(),
                         ),
                       ],
                     ),

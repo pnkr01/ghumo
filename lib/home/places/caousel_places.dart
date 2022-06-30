@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ghumo/home/places/details_page.dart';
 
-import '../../global/global.dart';
+import '../../../global/global.dart';
+import 'details_page.dart';
 
 class PlacesTab extends StatefulWidget {
   const PlacesTab({Key? key}) : super(key: key);
@@ -66,129 +67,6 @@ class _PlacesTabState extends State<PlacesTab> {
           ),
         ),
       );
-
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => DetailsPage(
-      //       imgUrl:
-      //           sharedPreferences!.getString('img') ?? 'error fetching imgUrl',
-      //       title:
-      //           sharedPreferences!.getString('title') ?? 'error fetching title',
-      //       rating: sharedPreferences!.getString('rating') ??
-      //           'error fetching rating',
-      //       // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
-      //       description: sharedPreferences!.getString('description') ??
-      //           'error fetching description',
-      //       charge: sharedPreferences!.getString('charge') ??
-      //           'error fetching spending',
-      //     ),
-      //   ),
-      // );
-      // switch (index) {
-      //   case 0:
-      //     //Navigator.pop(context);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => DetailsPage(
-      //       imgUrl: sharedPreferences!.getString('img') ??
-      //           'error fetching imgUrl',
-      //       title: sharedPreferences!.getString('title') ??
-      //           'error fetching title',
-      //       rating: sharedPreferences!.getString('rating') ??
-      //           'error fetching rating',
-      //       // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
-      //       description: sharedPreferences!.getString('description') ??
-      //           'error fetching description',
-      //       charge: sharedPreferences!.getString('charge') ??
-      //           'error fetching spending',
-      //     ),
-      //   ),
-      // );
-      //     break;
-      //   case 1:
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => DetailsPage(
-      //           imgUrl: sharedPreferences!.getString('img') ??
-      //               'error fetching imgUrl',
-      //           title: sharedPreferences!.getString('title') ??
-      //               'error fetching title',
-      //           rating: sharedPreferences!.getString('rating') ??
-      //               'error fetching rating',
-      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
-      //           description: sharedPreferences!.getString('description') ??
-      //               'error fetching description',
-      //           charge: sharedPreferences!.getString('charge') ??
-      //               'error fetching spending',
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 2:
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => DetailsPage(
-      //           imgUrl: sharedPreferences!.getString('img') ??
-      //               'error fetching imgUrl',
-      //           title: sharedPreferences!.getString('title') ??
-      //               'error fetching title',
-      //           rating: sharedPreferences!.getString('rating') ??
-      //               'error fetching rating',
-      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
-      //           description: sharedPreferences!.getString('description') ??
-      //               'error fetching description',
-      //           charge: sharedPreferences!.getString('charge') ??
-      //               'error fetching spending',
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 3:
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => DetailsPage(
-      //           imgUrl: sharedPreferences!.getString('img') ??
-      //               'error fetching imgUrl',
-      //           title: sharedPreferences!.getString('title') ??
-      //               'error fetching title',
-      //           rating: sharedPreferences!.getString('rating') ??
-      //               'error fetching rating',
-      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
-      //           description: sharedPreferences!.getString('description') ??
-      //               'error fetching description',
-      //           charge: sharedPreferences!.getString('charge') ??
-      //               'error fetching spending',
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 4:
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => DetailsPage(
-      //           imgUrl: sharedPreferences!.getString('img') ??
-      //               'error fetching imgUrl',
-      //           title: sharedPreferences!.getString('title') ??
-      //               'error fetching title',
-      //           rating: sharedPreferences!.getString('rating') ??
-      //               'error fetching rating',
-      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
-      //           description: sharedPreferences!.getString('description') ??
-      //               'error fetching description',
-      //           charge: sharedPreferences!.getString('charge') ??
-      //               'error fetching spending',
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   default:
-      // }
     });
   }
 
@@ -230,13 +108,7 @@ class _PlacesTabState extends State<PlacesTab> {
                       builder: (BuildContext context) {
                         return InkWell(
                           onTap: () {
-                            print(indexing);
-                            //dialogOption(context, index);
                             _fetchdb(indexing);
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const MyH()));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -305,7 +177,7 @@ class _PlacesTabState extends State<PlacesTab> {
                   initialPage: 0,
                   enableInfiniteScroll: true,
                   reverse: false,
-                  autoPlay: true,
+                  autoPlay: false,
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlayAnimationDuration: const Duration(milliseconds: 500),
                   autoPlayCurve: Curves.fastOutSlowIn,
@@ -313,15 +185,17 @@ class _PlacesTabState extends State<PlacesTab> {
                   scrollDirection: Axis.horizontal,
                 ),
               ),
-              // Positioned(
-              //   bottom: MediaQuery.of(context).size.height * 0.03,
-              //   left: MediaQuery.of(context).size.width * 0.3,
-              //   child: CarouselIndicator(
-              //     color: Colors.blue,
-              //     count: slideList!.length,
-              //     index: activeIndex,
-              //   ),
-              // ),
+              Positioned(
+                bottom: MediaQuery.of(context).size.height * 0.03,
+                left: MediaQuery.of(context).size.width * 0.3,
+                child: CarouselIndicator(
+                  color: Colors.blue,
+                  count: slideList!.length,
+                  index: activeIndex,
+                ),
+              ),
+
+
               //TODOS: DHAM CHANGE OPTION
               // Positioned(
               //   child: ElevatedButton(
@@ -341,96 +215,4 @@ class _PlacesTabState extends State<PlacesTab> {
       ),
     );
   }
-
-  // CarouselSlider(
-  //   items: [
-  //     place(
-  //       "Puri",
-  //       "https://images.unsplash.com/photo-1599229526921-4f29d42b0b41?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80",
-  //     )
-  //   ],
-  //   options: CarouselOptions(
-  //     height: 180.0,
-  //     enlargeCenterPage: false,
-  //     autoPlay: true,
-  //     aspectRatio: 16 / 9,
-  //     autoPlayCurve: Curves.fastOutSlowIn,
-  //     enableInfiniteScroll: true,
-  //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-  //     viewportFraction: 0.8,
-  //   ),
-  // );
-}
-
-Widget place(title, image) {
-  return AspectRatio(
-    aspectRatio: 16 / 9,
-    child: Container(
-      margin: const EdgeInsets.only(right: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(image)),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                stops: const [
-                  0.1,
-                  0.9
-                ],
-                colors: [
-                  Colors.black.withOpacity(.8),
-                  Colors.black.withOpacity(.1)
-                ])),
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              title,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget placeVertical(title, image) {
-  return AspectRatio(
-    aspectRatio: 4 / 6,
-    child: Container(
-      margin: const EdgeInsets.only(right: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(image)),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          gradient: LinearGradient(
-            begin: Alignment.bottomRight,
-            stops: const [0.1, 0.9],
-            colors: [
-              Colors.black.withOpacity(.8),
-              Colors.black.withOpacity(.1)
-            ],
-          ),
-        ),
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              title,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
 }
