@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumo/home/places/details_page.dart';
 
 import '../../global/global.dart';
 
@@ -14,6 +15,7 @@ class PlacesTab extends StatefulWidget {
 
 class _PlacesTabState extends State<PlacesTab> {
   int activeIndex = 0;
+  int indexing = 0;
   Stream? slides;
   List? slideList;
   _querydb() {
@@ -30,16 +32,165 @@ class _PlacesTabState extends State<PlacesTab> {
         );
   }
 
-  // _fetchdb(int index) async {
-  //  await FirebaseFirestore.instance
-  //       .collection('carousel')
-  //       .doc('zvqim8TLgYcbYxnpKFJ6')
-  //       .collection(sharedPreferences!.getString('dham')!)
-  //       .doc()
-  //       .get({
-  //         'rating' :
-  //       })
-  // }
+  _fetchdb(int index) async {
+    await FirebaseFirestore.instance
+        .collection('carousel')
+        .doc('zvqim8TLgYcbYxnpKFJ6')
+        .collection(sharedPreferences!.getString('dham') ?? 'Puri')
+        .get()
+        .then((snap) async {
+      // print("kkkkkkkkkkkkkkkkkkk");
+      // print(snap.docs[index]['rating']);
+      await sharedPreferences!
+          .setString('description', snap.docs[index]["desc"]);
+      await sharedPreferences!.setString('img', snap.docs[index]["img"]);
+      await sharedPreferences!.setString('rating', snap.docs[index]["rating"]);
+      await sharedPreferences!.setString('title', snap.docs[index]["title"]);
+      await sharedPreferences!.setString('charge', snap.docs[index]["charge"]);
+    }).then((value) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailsPage(
+            imgUrl:
+                sharedPreferences!.getString('img') ?? 'error fetching imgUrl',
+            title:
+                sharedPreferences!.getString('title') ?? 'error fetching title',
+            rating: sharedPreferences!.getString('rating') ??
+                'error fetching rating',
+            // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+            description: sharedPreferences!.getString('description') ??
+                'error fetching description',
+            charge: sharedPreferences!.getString('charge') ??
+                'error fetching spending',
+          ),
+        ),
+      );
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => DetailsPage(
+      //       imgUrl:
+      //           sharedPreferences!.getString('img') ?? 'error fetching imgUrl',
+      //       title:
+      //           sharedPreferences!.getString('title') ?? 'error fetching title',
+      //       rating: sharedPreferences!.getString('rating') ??
+      //           'error fetching rating',
+      //       // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+      //       description: sharedPreferences!.getString('description') ??
+      //           'error fetching description',
+      //       charge: sharedPreferences!.getString('charge') ??
+      //           'error fetching spending',
+      //     ),
+      //   ),
+      // );
+      // switch (index) {
+      //   case 0:
+      //     //Navigator.pop(context);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => DetailsPage(
+      //       imgUrl: sharedPreferences!.getString('img') ??
+      //           'error fetching imgUrl',
+      //       title: sharedPreferences!.getString('title') ??
+      //           'error fetching title',
+      //       rating: sharedPreferences!.getString('rating') ??
+      //           'error fetching rating',
+      //       // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+      //       description: sharedPreferences!.getString('description') ??
+      //           'error fetching description',
+      //       charge: sharedPreferences!.getString('charge') ??
+      //           'error fetching spending',
+      //     ),
+      //   ),
+      // );
+      //     break;
+      //   case 1:
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => DetailsPage(
+      //           imgUrl: sharedPreferences!.getString('img') ??
+      //               'error fetching imgUrl',
+      //           title: sharedPreferences!.getString('title') ??
+      //               'error fetching title',
+      //           rating: sharedPreferences!.getString('rating') ??
+      //               'error fetching rating',
+      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+      //           description: sharedPreferences!.getString('description') ??
+      //               'error fetching description',
+      //           charge: sharedPreferences!.getString('charge') ??
+      //               'error fetching spending',
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 2:
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => DetailsPage(
+      //           imgUrl: sharedPreferences!.getString('img') ??
+      //               'error fetching imgUrl',
+      //           title: sharedPreferences!.getString('title') ??
+      //               'error fetching title',
+      //           rating: sharedPreferences!.getString('rating') ??
+      //               'error fetching rating',
+      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+      //           description: sharedPreferences!.getString('description') ??
+      //               'error fetching description',
+      //           charge: sharedPreferences!.getString('charge') ??
+      //               'error fetching spending',
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 3:
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => DetailsPage(
+      //           imgUrl: sharedPreferences!.getString('img') ??
+      //               'error fetching imgUrl',
+      //           title: sharedPreferences!.getString('title') ??
+      //               'error fetching title',
+      //           rating: sharedPreferences!.getString('rating') ??
+      //               'error fetching rating',
+      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+      //           description: sharedPreferences!.getString('description') ??
+      //               'error fetching description',
+      //           charge: sharedPreferences!.getString('charge') ??
+      //               'error fetching spending',
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   case 4:
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => DetailsPage(
+      //           imgUrl: sharedPreferences!.getString('img') ??
+      //               'error fetching imgUrl',
+      //           title: sharedPreferences!.getString('title') ??
+      //               'error fetching title',
+      //           rating: sharedPreferences!.getString('rating') ??
+      //               'error fetching rating',
+      //           // guide: sharedPreferences!.getString('rating') ?? 'error fetching rating',,
+      //           description: sharedPreferences!.getString('description') ??
+      //               'error fetching description',
+      //           charge: sharedPreferences!.getString('charge') ??
+      //               'error fetching spending',
+      //         ),
+      //       ),
+      //     );
+      //     break;
+      //   default:
+      // }
+    });
+  }
 
   @override
   void initState() {
@@ -78,8 +229,14 @@ class _PlacesTabState extends State<PlacesTab> {
                     return Builder(
                       builder: (BuildContext context) {
                         return InkWell(
-                          onTap: (){
-                           // _fetchdb(index);
+                          onTap: () {
+                            print(indexing);
+                            //dialogOption(context, index);
+                            _fetchdb(indexing);
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const MyH()));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -137,6 +294,7 @@ class _PlacesTabState extends State<PlacesTab> {
                     setState(
                       () {
                         activeIndex = index;
+                        indexing = activeIndex;
                       },
                     );
                   },
@@ -147,7 +305,7 @@ class _PlacesTabState extends State<PlacesTab> {
                   initialPage: 0,
                   enableInfiniteScroll: true,
                   reverse: false,
-                  autoPlay: false,
+                  autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlayAnimationDuration: const Duration(milliseconds: 500),
                   autoPlayCurve: Curves.fastOutSlowIn,
