@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ghumo/global/change_dham.dart';
@@ -126,14 +127,21 @@ class _HomePageState extends State<HomePage>
                           _scaffoldKey.currentState!.openDrawer();
                         },
                       ),
-                      const Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "Search places, restaurants",
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: Colors.grey)),
-                        ),
-                      ),
+                      Expanded(
+                          child: AnimatedTextKit(
+                        animatedTexts: [
+                          RotateAnimatedText('Search Places'),
+                          RotateAnimatedText('Restaurents'),
+                          RotateAnimatedText(
+                            'Hotels & More',
+                          ),
+                        ],
+                        totalRepeatCount: 20,
+                        isRepeatingAnimation: true,
+                       // pause: const Duration(milliseconds: 1000),
+                        //displayFullTextOnTap: true,
+                        //stopPauseOnTap: true,
+                      )),
                       IconButton(
                         icon: const Icon(
                           Icons.account_balance_wallet_rounded,

@@ -44,6 +44,9 @@ dependencies:
   cached_network_image: ^3.2.0
   carousel_indicator: ^1.0.6
   flutter_phoenix: ^1.0.0
+  animated_text_kit: ^4.2.1
+  google_fonts: ^3.0.1
+  url_launcher: ^6.1.4
 
 dev_dependencies:
   flutter_test:

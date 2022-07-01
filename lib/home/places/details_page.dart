@@ -33,8 +33,11 @@
 //   }
 // }
 
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DetailsPage extends StatefulWidget {
   final String imgUrl;
@@ -59,6 +62,51 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage>
     with SingleTickerProviderStateMixin {
+  void launchMap(String address) async {
+    String query = Uri.encodeFull(address);
+    String googleUrl = "https://www.google.com/maps/search/?api=1&query=$query";
+
+      if (await canLaunchUrlString(googleUrl)) {
+      await launchUrlString(googleUrl);
+    } else {
+      print('Could not launch $googleUrl');
+      throw 'Could not launch $googleUrl';
+    }
+  }
+  
+
+  TextEditingController textController = TextEditingController();
+  List reviews = [
+    'hte',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+    'kk',
+  ];
+  bool isTap = false;
   TabController? tabController;
 
   @override
@@ -132,10 +180,17 @@ class _DetailsPageState extends State<DetailsPage>
                               const SizedBox(
                                 width: 24,
                               ),
-                              const Icon(
-                                Icons.favorite_border_outlined,
-                                color: Colors.white,
-                                size: 24,
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    isTap = !isTap;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: !isTap ? Colors.white : Colors.red,
+                                  size: !isTap ? 24 : 27,
+                                ),
                               )
                             ],
                           ),
@@ -185,9 +240,10 @@ class _DetailsPageState extends State<DetailsPage>
                                   Text(
                                     "${int.parse(widget.rating)}",
                                     style: const TextStyle(
-                                        color: Colors.white70,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 17),
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 17,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -214,10 +270,10 @@ class _DetailsPageState extends State<DetailsPage>
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: const Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut scelerisque arcu quis eros auctor, eu dapibus urna congue. Nunc nisi diam, semper maximus risus dignissim, semper maximus nibh. Sed finibus ipsum eu erat finibus efficitur. ",
+                child: Text(
+                  widget.description,
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
                     height: 1.5,
                     fontWeight: FontWeight.w600,
@@ -250,7 +306,7 @@ class _DetailsPageState extends State<DetailsPage>
               ),
               SizedBox(
                 width: double.maxFinite,
-                height: 280,
+                height: 500,
                 child: TabBarView(
                   controller: tabController,
                   children: [
@@ -266,9 +322,13 @@ class _DetailsPageState extends State<DetailsPage>
                                       Icons.person,
                                     ),
                                   ),
-                                  title: const TextField(),
+                                  title: TextField(
+                                    controller: textController,
+                                  ),
                                   trailing: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      reviews.add(textController.text);
+                                    },
                                     child: const Text("Send"),
                                   ),
                                 ),
@@ -280,25 +340,31 @@ class _DetailsPageState extends State<DetailsPage>
                           ),
                           ListBody(
                             children: List.generate(
-                              3,
-                              (index) => Column(
-                                children: const [
-                                  Divider(
-                                    thickness: 1,
-                                  ),
-                                  ListTile(
-                                    leading: CircleAvatar(
-                                      child: Icon(Icons.person),
-                                    ),
-                                    title: Text(
-                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-                                  ),
-                                  Divider(
-                                    thickness: 1,
-                                  ),
-                                ],
-                              ),
-                            ),
+                                3,
+                                (index) => ListTile(
+                                      leading: const CircleAvatar(),
+                                      title:
+                                          Text(reviews[Random().nextInt(10)]),
+                                    )
+                                //  Column(
+                                //   children: const [
+                                //     Divider(
+                                //       thickness: 1,
+                                //     ),
+                                //     ListTile(
+                                //       leading: CircleAvatar(
+                                //         child: Icon(Icons.person),
+                                //       ),
+                                //       title: Text(
+                                //         'A place of great value and intrest, amazing experience',
+                                //       ),
+                                //     ),
+                                //     Divider(
+                                //       thickness: 1,
+                                //     ),
+                                //   ],
+                                // ),
+                                ),
                           ),
                           // const ListTile(
                           //   leading: CircleAvatar(
@@ -370,7 +436,23 @@ class _DetailsPageState extends State<DetailsPage>
                         );
                       }),
                     ),
-                    const Text("others"),
+                    SizedBox(
+                      height: 300,
+                      width: 400,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              launchMap(widget.title);
+                            },
+                            child: const Text(
+                              'Get Direction',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
