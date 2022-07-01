@@ -5,14 +5,14 @@ import '../../global/global.dart';
 import '../pagination/shimmer_page.dart';
 import 'package:ghumo/global/global.dart';
 
-class NearPlace extends StatefulWidget {
-  const NearPlace({Key? key}) : super(key: key);
+class NearHotel extends StatefulWidget {
+  const NearHotel({Key? key}) : super(key: key);
 
   @override
-  State<NearPlace> createState() => _NearPlaceState();
+  State<NearHotel> createState() => _NearHotelState();
 }
 
-class _NearPlaceState extends State<NearPlace> {
+class _NearHotelState extends State<NearHotel> {
   // _fetchdb(int index) async {
   //   await FirebaseFirestore.instance
   //       .collection('near')
@@ -55,8 +55,8 @@ class _NearPlaceState extends State<NearPlace> {
     final width = MediaQuery.of(context).size.width;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('near')
-            .doc('1k6C1AtuumAZ81bVlgo5')
+            .collection('hote_near')
+            .doc('T8RZhZF8EmkEEdrGDaIc')
             .collection(sharedPreferences!.getString('dham') ?? 'Puri')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -79,7 +79,7 @@ class _NearPlaceState extends State<NearPlace> {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    db.fetchdb(index, context,'near','1k6C1AtuumAZ81bVlgo5');
+                    db.fetchdb(index, context,'hote_near','T8RZhZF8EmkEEdrGDaIc');
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(5),

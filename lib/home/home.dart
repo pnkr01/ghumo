@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:ghumo/global/change_dham.dart';
+import 'package:ghumo/global/global.dart';
 import 'package:ghumo/home/drawer/drawer.dart';
+import 'package:ghumo/home/hotels/near_hotel.dart';
 import 'package:ghumo/home/places/caousel_places.dart';
 import 'package:ghumo/home/places/near_place.dart';
+import 'package:ghumo/home/restaurent/csrousel_restaurent.dart';
+import 'package:ghumo/home/restaurent/near_restatutent.dart';
+
+import 'hotels/carousel_hotels.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +20,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin, RestorationMixin {
+  bool isSliding = false;
+  List<String> item = [
+    'Badrinath',
+    'Dwarka',
+    'Puri',
+    'Rameswaram',
+  ];
+  String? selectedItem = sharedPreferences!.getString('dham') ?? 'Puri';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   late TabController _tabController;
@@ -56,8 +72,34 @@ class _HomePageState extends State<HomePage>
       "Restaurants",
       "Hotels",
     ];
-
     return Scaffold(
+      //floatingActionButtonAnimator: ,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: isSliding
+          ? ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ChangeDham();
+                    });
+              },
+              child: const Icon(Icons.menu),
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all(const CircleBorder()),
+                padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.blue), // <-- Button color
+                overlayColor:
+                    MaterialStateProperty.resolveWith<Color?>((states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return Colors.deepPurple;
+                  }
+                  return null; // <-- Splash color
+                }),
+              ),
+            )
+          : null,
       key: _scaffoldKey,
       drawer: const Drawer(
         child: NavigationDrawerWidget(),
@@ -126,12 +168,12 @@ class _HomePageState extends State<HomePage>
                   controller: _tabController,
                   children: [
                     Column(
-                      children: const <Widget>[
-                        PlacesTab(),
-                        SizedBox(
+                      children: [
+                        const PlacesTab(),
+                        const SizedBox(
                           height: 20.0,
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.topLeft,
                           child: Text(
                             'More places to visit',
@@ -141,33 +183,126 @@ class _HomePageState extends State<HomePage>
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20.0,
                         ),
                         Expanded(
-                          child: NearPlace(),
+                          child: NotificationListener<UserScrollNotification>(
+                            onNotification: ((notification) {
+                              if (notification.direction ==
+                                  ScrollDirection.forward) {
+                                if (!isSliding) {
+                                  setState(() {
+                                    isSliding = true;
+                                  });
+                                }
+                              } else if (notification.direction ==
+                                  ScrollDirection.reverse) {
+                                if (isSliding) {
+                                  setState(() {
+                                    isSliding = false;
+                                  });
+                                }
+                              }
+                              return isSliding;
+                            }),
+                            child: const NearPlace(),
+                          ),
                         ),
                       ],
                     ),
-                    const Center(
-                      child: Text(
-                        'Restaurants',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
+
+                    //TODOS: RESTAURENT IMPLEMENTATION
+                    Column(
+                      children: [
+                        const CarouselRestaurent(),
+                        const SizedBox(
+                          height: 20.0,
                         ),
-                      ),
+                        const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'More places to visit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Expanded(
+                          child: NotificationListener<UserScrollNotification>(
+                            onNotification: ((notification) {
+                              if (notification.direction ==
+                                  ScrollDirection.forward) {
+                                if (!isSliding) {
+                                  setState(() {
+                                    isSliding = true;
+                                  });
+                                }
+                              } else if (notification.direction ==
+                                  ScrollDirection.reverse) {
+                                if (isSliding) {
+                                  setState(() {
+                                    isSliding = false;
+                                  });
+                                }
+                              }
+                              return isSliding;
+                            }),
+                            child: const NearRestaurentPlace(),
+                          ),
+                        ),
+                      ],
                     ),
 
+                    //TODOS: Hotel IMPLEMENTATION
                     // second tab bar view widget
-                    const Center(
-                      child: Text(
-                        'Hotels',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
+                    Column(
+                      children: [
+                        const CarouselHotel(),
+                        const SizedBox(
+                          height: 20.0,
                         ),
-                      ),
+                        const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'More places to visit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Expanded(
+                          child: NotificationListener<UserScrollNotification>(
+                            onNotification: ((notification) {
+                              if (notification.direction ==
+                                  ScrollDirection.forward) {
+                                if (!isSliding) {
+                                  setState(() {
+                                    isSliding = true;
+                                  });
+                                }
+                              } else if (notification.direction ==
+                                  ScrollDirection.reverse) {
+                                if (isSliding) {
+                                  setState(() {
+                                    isSliding = false;
+                                  });
+                                }
+                              }
+                              return isSliding;
+                            }),
+                            child: const NearHotel(),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -177,7 +177,7 @@ class _BuildProfileBodyState extends State<BuildProfileBody> {
 
     SharedPreferences? sharedPreferences =
         await SharedPreferences.getInstance();
-        
+
     await sharedPreferences.setString("dham", selectedItem!);
     await sharedPreferences.setString("email", email.text.trim());
     await SharedPreferences.getInstance();
@@ -188,7 +188,7 @@ class _BuildProfileBodyState extends State<BuildProfileBody> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        //TODOS: WHERE TO SEND USER AFTER COMPLETE SIGN IN...
+        //TODOS: WHERE TO SEND USER AFTER COMPLETE SIGN IN..
         builder: (context) => const HomePage(),
       ),
       (route) => false,

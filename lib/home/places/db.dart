@@ -4,10 +4,10 @@ import '../../global/global.dart';
 import 'details_page.dart';
 
 class Db {
-  void fetchdb(int index, BuildContext context) async {
+  void fetchdb(int index, BuildContext context, String arg, String docs) async {
     await FirebaseFirestore.instance
-        .collection('near')
-        .doc('1k6C1AtuumAZ81bVlgo5')
+        .collection(arg)
+        .doc(docs)
         .collection(sharedPreferences!.getString('dham') ?? 'Puri')
         .get()
         .then((snap) async {
@@ -39,5 +39,13 @@ class Db {
         ),
       );
     });
+  }
+
+  changeDham(String newDham) async {
+    await FirebaseFirestore.instance
+        .collection('phone')
+        .doc(sharedPreferences!.getString('phoneNumber'))
+        .update({'dham': newDham});
+    sharedPreferences!.setString('dham', newDham);
   }
 }
