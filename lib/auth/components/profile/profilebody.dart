@@ -172,12 +172,14 @@ class _BuildProfileBodyState extends State<BuildProfileBody> {
             "phoneNumber": widget.phoneNumber.trim(),
             "fullName": fullName.text.trim(),
             "dham": selectedItem,
+            'walletOpen' : false,
           }),
         );
 
     SharedPreferences? sharedPreferences =
         await SharedPreferences.getInstance();
 
+    await sharedPreferences.setBool("walletOpen", false);
     await sharedPreferences.setString("dham", selectedItem!);
     await sharedPreferences.setString("email", email.text.trim());
     await SharedPreferences.getInstance();

@@ -94,6 +94,8 @@ class _BuildBodyOTPScreenState extends State<BuildBodyOTPScreen> {
           .setString("userEmail", snap.data()!["userEmail"]);
       await sharedPreferences!
           .setString("dham", snap.data()!["dham"]);
+      await sharedPreferences!
+          .setString("walletOpen", snap.data()!["walletOpen"]);
       Navigator.pop(context);
       Navigator.pushReplacement(
         context,

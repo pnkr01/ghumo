@@ -47,6 +47,9 @@ dependencies:
   animated_text_kit: ^4.2.1
   google_fonts: ^3.0.1
   url_launcher: ^6.1.4
+  qrscan: ^0.3.2
+  qr_flutter: ^4.0.0
+  permission_handler: ^10.0.0
 
 dev_dependencies:
   flutter_test:
