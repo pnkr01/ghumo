@@ -4,9 +4,10 @@ import 'package:ghumo/home/drawer/components/help_support.dart';
 import 'package:ghumo/home/drawer/components/my_account.dart';
 import 'package:ghumo/home/drawer/components/my_bookings.dart';
 import 'package:ghumo/home/drawer/components/settings.dart';
-import 'package:ghumo/home/drawer/components/wallet.dart';
+import 'package:ghumo/home/wallet/wallet_activate.dart';
 import '../../auth/service/login_sign.dart';
 import '../../global/global.dart';
+import '../wallet/wallet_main.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
@@ -204,9 +205,17 @@ class NavigationDrawerWidget extends StatelessWidget {
         ));
         break;
       case 1:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const MyWallet(),
-        ));
+        if (sharedPreferences!.getBool('walletOpen') == true) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Wallet()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const WalletActivate()),
+          );
+        }
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(

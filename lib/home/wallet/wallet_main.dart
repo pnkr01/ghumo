@@ -75,7 +75,7 @@ class _WalletState extends State<Wallet> {
           ),
           Positioned(
               top: 0,
-              bottom: 650,
+              bottom: 700,
               child: IconButton(
                 onPressed: () {
                   Navigator.pop(context);

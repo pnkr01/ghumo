@@ -9,6 +9,8 @@ import 'package:ghumo/home/places/caousel_places.dart';
 import 'package:ghumo/home/places/near_place.dart';
 import 'package:ghumo/home/restaurent/csrousel_restaurent.dart';
 import 'package:ghumo/home/restaurent/near_restatutent.dart';
+import 'package:ghumo/home/wallet/wallet_activate.dart';
+import 'package:ghumo/home/wallet/wallet_main.dart';
 
 import 'hotels/carousel_hotels.dart';
 
@@ -138,7 +140,7 @@ class _HomePageState extends State<HomePage>
                         ],
                         totalRepeatCount: 20,
                         isRepeatingAnimation: true,
-                       // pause: const Duration(milliseconds: 1000),
+                        // pause: const Duration(milliseconds: 1000),
                         //displayFullTextOnTap: true,
                         //stopPauseOnTap: true,
                       )),
@@ -149,6 +151,20 @@ class _HomePageState extends State<HomePage>
                         ),
                         onPressed: () {
                           //TODOS: WALLET
+                          if (sharedPreferences!.getBool('walletOpen') ==
+                              true) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Wallet()),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const WalletActivate()),
+                            );
+                          }
                         },
                       ),
                     ],
