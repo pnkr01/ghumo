@@ -217,7 +217,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Team Name - Team Stellar Hackers **(HackStack Hackathon 2022)**
+Team Name - Apollo 
 <br>
 [Krishna Mahato](https://github.com/krishna9304)
 <br>
